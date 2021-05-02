@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './question.dart';
-import './answer.dart';
+import 'package:quizz_app/result.dart';
+import './quiz.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +14,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   var _questionIndex = 0;
 
-  var _questions = [
+  final _questions = const [
     {
       'questionText': 'What\'s your favorite color?',
       'answers': ['Black', 'White', 'Red', 'Blue', 'Yellow'],
@@ -29,27 +29,32 @@ class _MyAppState extends State<MyApp> {
     },
   ];
 
-  void _answerQuestion() {
-    setState(() {
-      if (_questionIndex < _questions.length - 1) _questionIndex += 1;
-    });
+  void _onAnswerQuestion() {
+    setState(() => _questionIndex += 1);
+  }
+
+  Map<String, Object> getQuestion() {
+    if (_questionIndex < _questions.length)
+      return _questions[_questionIndex];
+    else {
+      return null;
+    }
   }
 
   Widget build(BuildContext context) {
-    var question = _questions[_questionIndex];
+    var question = getQuestion();
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text('My Title'),
         ),
-        body: Column(
-          children: [
-            Question(question['questionText']),
-            ...(question['answers'] as List<String>)
-                .map((answer) => Answer(answer, _answerQuestion))
-                .toList(),
-          ],
-        ),
+        body: question != null
+            ? Quiz(
+                question: question['questionText'],
+                answers: question['answers'],
+                onAnswer: _onAnswerQuestion,
+              )
+            : Result(),
       ),
     );
   }
