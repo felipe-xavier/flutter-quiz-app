@@ -46,8 +46,15 @@ class _MyAppState extends State<MyApp> {
     },
   ];
 
+  void _resetState() {
+    setState(() {
+      _totalScore = 0;
+      _questionIndex = 0;
+    });
+  }
+
   void _onAnswerQuestion(int score) {
-    setState(() => _totalScore += score);
+    _totalScore += score;
     setState(() => _questionIndex += 1);
   }
 
@@ -72,7 +79,7 @@ class _MyAppState extends State<MyApp> {
                 answers: question['answers'],
                 onAnswer: _onAnswerQuestion,
               )
-            : Result(_totalScore),
+            : Result(_totalScore, _resetState),
       ),
     );
   }
