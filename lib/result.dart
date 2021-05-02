@@ -7,7 +7,7 @@ class Result extends StatelessWidget {
   Result(this.totalScore, this.onReset);
 
   String get getSore {
-    return 'You got ' + totalScore.toString() + ' points!';
+    return 'You got ' + totalScore.toString() + ' weird points!';
   }
 
   @override

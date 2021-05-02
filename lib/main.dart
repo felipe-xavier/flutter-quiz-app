@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('My Title'),
+          title: Center(child: Text('My Personality Quiz')),
         ),
         body: question != null
             ? Quiz(
